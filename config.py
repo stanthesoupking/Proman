@@ -4,7 +4,7 @@ import util
 
 CONFIG_FILE = "config.toml"
 
-
+# Performs first time setup and creates a config file with all required fields
 def firstTimeSetup():
     print("Proman - First time setup:")
     print("--------------------------")
@@ -18,10 +18,12 @@ def firstTimeSetup():
     c['projects_path'] = util.inputWithDefault(
         "Projects Path({}): ".format(d), d)
 
+    # Get command to run when a project is created/opened
     d = "code ."
     c['open_command'] = util.inputWithDefault(
         "Open Command ({}): ".format(d), d)
 
+    # Write config to file
     f = open(CONFIG_FILE, "w")
     f.write(toml.dumps(c))
     f.close()
@@ -30,6 +32,7 @@ def firstTimeSetup():
     print("Configuration complete.")
 
 
+# Check if first time setup needs to be run
 if not os.path.isfile(CONFIG_FILE):
     # No config file exists, run first-time-setup
     firstTimeSetup()
@@ -40,5 +43,6 @@ config = '\n'.join(f.readlines())
 config = toml.loads(config)
 f.close()
 
+# Returns the given config setting
 def get(setting):
     return config[setting]
