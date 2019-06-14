@@ -5,7 +5,7 @@ from subprocess import call
 import languages
 import config
 
-VERSION = "0.1.1"
+VERSION = "0.1.2"
 
 help_text = 'proman [[-l <language name>] new <project name>] [-h, --help] [-v, --version]'
 

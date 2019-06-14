@@ -1,5 +1,6 @@
 import os
 import util
+from subprocess import call
 
 class Language():
     def __init__(self, title, names, folder_name):
@@ -66,6 +67,9 @@ class CLanguage(Language):
                 "\n" +
                 'add_executable(' + name + ' ${' + name + '_SRC} ${' + name + '_INC})\n')
         f.close()
+    
+    def getStyledName(self, n):
+        return util.toSnakeCase(n)
 
 class LuaLanguage(Language):
     def __init__(self):
@@ -96,11 +100,57 @@ class JavaLanguage(Language):
         )
         f.close()
 
+class RubyLanguage(Language):
+    def __init__(self):
+        self.title = 'Ruby'
+        self.names = ['ruby']
+        self.folder_name = 'Ruby'
+
+    def create(self, name, dir):
+        f = open(os.path.join(dir, "main.rb".format(name)), 'w')
+        f.write(
+            '#!/usr/bin/ruby -w\n' +
+            '\n' +
+            'puts "Hello World."\n'
+        )
+        f.close()
+    
+    def getStyledName(self, n):
+        return util.toSnakeCase(n)
+
+class NodeJSLanguage(Language):
+    def __init__(self):
+        self.title = 'NodeJS'
+        self.names = ['nodejs', 'node']
+        self.folder_name = 'NodeJS'
+
+    def create(self, name, dir):
+        f = open(os.path.join(dir, "main.js".format(name)), 'w')
+        f.write(
+            'console.log("Hello World");\n'
+        )
+        f.close()
+
+        # Run 'npm init' in folder
+        pdir = os.getcwd() # Store previous directory
+
+        os.chdir(dir)
+        call(['npm', 'init'])
+
+        os.chdir(pdir) # Go back to previous directory
+
+    def getStyledName(self, n):
+        return util.toKebabCase(n)
+
+
+
 all = [
     PythonLanguage(),
     CLanguage(),
     LuaLanguage(),
-    JavaLanguage()
+    JavaLanguage(),
+    RubyLanguage(),
+    NodeJSLanguage()
 ]
 
 
