@@ -38,7 +38,7 @@ def create_project(name, language):
 
 def main(argv):
     try:
-        opts, args = getopt.getopt(argv, "hlv:", ["language=","version"])
+        opts, args = getopt.getopt(argv, "hl:v", ["language=","version"])
     except getopt.GetoptError:
         print(help_text)
         sys.exit(2)
