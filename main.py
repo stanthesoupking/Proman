@@ -5,9 +5,10 @@ from subprocess import call
 import languages
 import config
 
-VERSION = "0.1.2"
+VERSION = "0.1.3"
 
 help_text = 'proman [[-l <language name>] new <project name>] [-h, --help] [-v, --version]'
+
 
 def create_project(name, language):
     # Get styled name for language
@@ -34,7 +35,7 @@ def create_project(name, language):
 
     # Change into project directory and call 'open_command' in project folder
     os.chdir(ppath)
-    call(config.get('open_command').split(' '))
+    call(config.getlang(language, 'open_command').split(' '))
 
 
 def main(argv):

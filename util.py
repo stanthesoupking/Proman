@@ -6,8 +6,10 @@ def toCamelCase(x: str):
 def toSnakeCase(x: str):
     return x.lower().replace(' ', '_')
 
+
 def toKebabCase(x: str):
     return x.lower().replace(' ', '-')
+
 
 def inputWithDefault(text: str, default=""):
     x = input(text)

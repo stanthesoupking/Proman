@@ -2,6 +2,7 @@ import os
 import util
 from subprocess import call
 
+
 class Language():
     def __init__(self, title, names, folder_name):
         self.title = title
@@ -67,9 +68,10 @@ class CLanguage(Language):
                 "\n" +
                 'add_executable(' + name + ' ${' + name + '_SRC} ${' + name + '_INC})\n')
         f.close()
-    
+
     def getStyledName(self, n):
         return util.toSnakeCase(n)
+
 
 class LuaLanguage(Language):
     def __init__(self):
@@ -81,6 +83,7 @@ class LuaLanguage(Language):
         f = open(os.path.join(dir, 'main.lua'), 'w')
         f.write("--Insert code here")
         f.close()
+
 
 class JavaLanguage(Language):
     def __init__(self):
@@ -100,6 +103,7 @@ class JavaLanguage(Language):
         )
         f.close()
 
+
 class RubyLanguage(Language):
     def __init__(self):
         self.title = 'Ruby'
@@ -114,9 +118,10 @@ class RubyLanguage(Language):
             'puts "Hello World."\n'
         )
         f.close()
-    
+
     def getStyledName(self, n):
         return util.toSnakeCase(n)
+
 
 class NodeJSLanguage(Language):
     def __init__(self):
@@ -132,16 +137,15 @@ class NodeJSLanguage(Language):
         f.close()
 
         # Run 'npm init' in folder
-        pdir = os.getcwd() # Store previous directory
+        pdir = os.getcwd()  # Store previous directory
 
         os.chdir(dir)
         call(['npm', 'init'])
 
-        os.chdir(pdir) # Go back to previous directory
+        os.chdir(pdir)  # Go back to previous directory
 
     def getStyledName(self, n):
         return util.toKebabCase(n)
-
 
 
 all = [
@@ -156,7 +160,7 @@ all = [
 
 def get(name):
     for lang in all:
-        if name in lang.names:
+        if name.lower() in lang.names:
             return lang
     return None
 

@@ -5,6 +5,8 @@ import util
 CONFIG_FILE = "config.toml"
 
 # Performs first time setup and creates a config file with all required fields
+
+
 def firstTimeSetup():
     print("Proman - First time setup:")
     print("--------------------------")
@@ -44,5 +46,19 @@ config = toml.loads(config)
 f.close()
 
 # Returns the given config setting
+
+
 def get(setting):
     return config[setting]
+
+# Returns the given config setting for language
+
+
+def getlang(language, setting):
+    v = get(setting)
+
+    if language.title in config:
+        if setting in config[language.title]:
+            v = config[language.title][setting]
+
+    return v
